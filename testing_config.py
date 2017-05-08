@@ -5,7 +5,6 @@ import os
 from setup import basedir
 import json
 
-
 class BaseTestConfig(TestCase):
     default_user = {
         "email": "default@gmail.com",

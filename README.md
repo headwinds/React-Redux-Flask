@@ -1,10 +1,12 @@
 # React-Redux-Flask #
 
-Boilerplate application for a Flask JWT Backend and a React/Redux Front-End with Material UI.
+Boilerplate application for a Flask JWT Backend and a React/Redux Front-End with [Material UI](http://www.material-ui.com/).
+
+Connect to different databases including MySQL, PostgresSQL or SQLite.
 
 * Python 2.7+ or 3.x
 * Pytest
-* Heroku
+* Heroku 
 * Flask
 * React
 * Redux
@@ -15,31 +17,6 @@ Boilerplate application for a Flask JWT Backend and a React/Redux Front-End with
 * Webpack
 
 ![screenshot](http://i.imgur.com/ZIS4qkw.png)
-
-### Create DB
-```sh
-$ export DATABASE_URL="postgresql://username:password@localhost/mydatabase"
-
-or
-
-$ export DATABASE_URL="mysql+mysqlconnector://username:password@localhost/mydatabase"
-
-or
-
-$ export DATABASE_URL="sqlite:///your.db"
-
-More about connection strings in this [flask config guide](http://flask-sqlalchemy.pocoo.org/2.1/config/)
-
-$ python manage.py create_db
-$ python manage.py db upgrade
-$ python manage.py db migrate
-```
-
-To update database after creating new migrations, use:
-
-```sh
-$ python manage.py db upgrade
-```
 
 ### Install Front-End Requirements
 ```sh
@@ -99,7 +76,7 @@ $ sudo pip install flask flask_script flask_migrate flask_bcrypt
 
 Now, you can decide on which database you wish to use. 
 
-#### New to MySQL? 
+#### Create a MySQL Database 
 
 If you decide on MySQL, install the free community edition of [MySQL](https://dev.mysql.com/downloads/mysql/) and [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
@@ -132,7 +109,75 @@ $ npm start
 ```
 
 6. open your browser to http://localhost:3000/register and setup your first account
-7. enjoy! By this point, you should be able to create an account and login without errors. 
+
+
+#### Migrate from MySQL to PostgresSQL
+ 
+PostgreSQL is an open source object-relational database. 
+ 
+1. You can easily [install Postgres on a Mac via Brew](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
+
+By now, you'll have Postgres installed, started, and you'll be logged on. 
+
+2. Login or Signup for [Heroku](https://www.heroku.com)
+
+3. Create a new app and connect to your github under the Deploy tab. 
+
+4. Add [Heroku Postgres](https://www.heroku.com/postgres) as an add-on under the Resources tab. 
+
+5. View your Postgres credentials and connection strings by clicking on the Heroku Postgres :: Database link and then click the "View Credentials" button
+
+6. Now you'll want to attempt to connect to your PostgresSQL db instead of MySQL. This time, you need to migrate the connection from MySQL to PostgreSQL.      
+
+7. Upgrade and migrate the existing database and setup the python postgres connection via [psycopg2](https://wiki.postgresql.org/wiki/Psycopg2_Tutorial)
+
+```
+$ createdb 'mydatabase'
+$ export DATABASE_URL="postgresql://username:password@localhost/mydatabase"
+$ pip install psycopg2
+$ python manage.py db upgrade
+$ python manage.py db migrate
+```
+
+8. Run the back-end and start the Front-end
+```
+$ python manage.py runserver
+```
+
+9. CMD-T to tab to a new terminal screen in the same directory. Instead of using npm start this time, try [yarn](https://code.facebook.com/posts/1840075619545360) start.
+
+```
+$ cd static
+$ yarn start
+```
+
+
+### General DB Connection Strings
+```sh
+$ export DATABASE_URL="postgresql://xyvresnxxhiqae:ff208e2baaa5bbd74d47f6bbd3b6d25088e3ce6f0d41ad38a00565c62e864dc7@localhost/mydatabase"
+
+or
+
+$ export DATABASE_URL="mysql+mysqlconnector://username:password@localhost/mydatabase"
+
+or
+
+$ export DATABASE_URL="sqlite:///your.db"
+
+More about connection strings in this [flask config guide](http://flask-sqlalchemy.pocoo.org/2.1/config/)
+
+```
+
+
+## Heroku Deployment - coming soon
+
+
+
+## Zeit Deployment - not possible yet... 
+
+Zeit does not currently support persistence so you can install Postgres on with Docker.
+
+Deploying to [Zeit](https://zeit.co/) via [Docker](https://www.docker.com/)
 
 
 
